@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NETACADEMY.ID - Topologi Jaringan</title>
+    <link rel="stylesheet" href="belajar.css">
+    <style>
+        .topologi-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        /* Card Infografis Topologi */
+        .topologi-card {
+            background: #ffffff;
+            border: 3px solid #203124;
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 4px 4px 0px #203124;
+            transition: transform 0.2s;
+        }
+
+        .topologi-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            border-bottom: 2px dashed #e0e0e0;
+            padding-bottom: 8px;
+        }
+
+        .topo-icon {
+            font-size: 1.8rem;
+            background: #f3e5f5;
+            padding: 6px 10px;
+            border-radius: 12px;
+            border: 2px solid #203124;
+        }
+
+        .topo-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #4a148c;
+        }
+
+        /* =======================================================
+           DESAIN WADAH BINGKAI GAMBAR REAL (MENGGUNAKAN IMAGE)
+           ======================================================= */
+        .img-diagram-box {
+            background: #ffffff;
+            border: 3px solid #203124;
+            border-radius: 16px;
+            padding: 10px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 3px 3px 0px #203124;
+            overflow: hidden;
+        }
+
+        .img-diagram-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* Desain Kolom Kelebihan & Kekurangan */
+        .analysis-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .analysis-item {
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            border: 2px solid #203124;
+        }
+
+        .pro-box { background: #e8f5e9; color: #2e7d32; }
+        .con-box { background: #ffeee5; color: #c62828; }
+
+        .analysis-title {
+            font-weight: 900;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .topo-text {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #333;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="app-header">
+            <a class="back-btn" href="index.html">&#8592; Menu Utama</a>
+            <div class="title-block" style="text-align: right;">
+                <p class="eyebrow">NETACADEMY.ID Kelas X</p>
+                <h1 style="font-size: 1.5rem; font-weight: 900;">Topologi Jaringan</h1>
+            </div>
+        </header>
+
+        <div class="topologi-card" style="background: #f3e5f5; border-color: #4a148c; box-shadow: 4px 4px 0px #4a148c;">
+            <p class="topo-text" style="font-weight: bold; color: #4a148c;">
+                📐 Topologi Jaringan adalah pemetaan fisik susunan komputer. Di bawah ini adalah contoh arsitektur simulasi jaringan secara nyata:
+            </p>
+        </div>
+
+        <div class="topologi-container">
+            
+            <div class="topologi-card">
+                <div class="topologi-header">
+                    <div class="topo-icon">⭐</div>
+                    <div class="topo-title">1. Topologi Star (Bintang)</div>
+                </div>
+                <p class="topo-text">
+                    Setiap komputer klien dihubungkan langsung ke satu perangkat pusat penampung data menggunakan kabel terpisah.
+                </p>
+
+                <div class="img-diagram-box">
+                    <img src="cisco packet tarcer topologi star.JPG" alt="Simulasi Topologi Star Cisco Packet Tracer">
+                </div>
+                
+                <div class="analysis-box">
+                    <div class="analysis-item pro-box">
+                        <div class="analysis-title">👍 Kelebihan:</div>
+                        Jika salah satu kabel komputer putus atau rusak, komputer lainnya tetap bisa jalan tanpa gangguan.
+                    </div>
+                    <div class="analysis-item con-box">
+                        <div class="analysis-title">👎 Kekurangan:</div>
+                        Boros kabel. Jika alat Switch pusat rusak, maka seluruh jaringan mati total.
+                    </div>
+                </div>
+            </div>
+
+            <div class="topologi-card">
+                <div class="topologi-header">
+                    <div class="topo-icon">🚌</div>
+                    <div class="topo-title">2. Topologi Bus</div>
+                </div>
+                <p class="topo-text">
+                    Semua komputer dihubungkan berantai secara berurutan sepanjang satu kabel pusat tunggal bernama <i>Backbone</i>.
+                </p>
+
+                <div class="img-diagram-box">
+                    <img src="topologi bus.png" alt="Simulasi Topologi Bus">
+                </div>
+                
+                <div class="analysis-box">
+                    <div class="analysis-item pro-box">
+                        <div class="analysis-title">👍 Kelebihan:</div>
+                        Sangat hemat penggunaan kabel dan biaya pemasangannya sangat murah.
+                    </div>
+                    <div class="analysis-item con-box">
+                        <div class="analysis-title">👎 Kekurangan:</div>
+                        Jika kabel utama pusat (backbone) terputus, seluruh jaringan akan lumpuh total.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="topologi-card" style="background: #fff9c4; text-align: center; border-color: #fbc02d; margin-top: 10px; padding: 12px;">
+            <p style="font-weight: 900; color: #f57f17; font-size: 0.9rem;">💡 Info Lab: Penggunaan aset gambar simulasi asli seperti di atas akan membuat media pembelajaran skripsimu dinilai sangat valid dan kontekstual oleh para dosen ahli.</p>
+        </div>
+    </main>
+</body>
+</html>

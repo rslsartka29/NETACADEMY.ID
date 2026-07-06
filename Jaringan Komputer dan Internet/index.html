@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jaringan Komputer & Internet - Menu Utama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-card">
+            <div class="splash-animation" id="splashAnimation"></div>
+            <div class="splash-title">NETACADEMY.ID</div>
+            <div class="splash-subtitle">Media Pembelajaran - Kelas X SMA</div>
+            <button class="splash-skip" id="splashSkip">Mulai</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <button class="btn-round" id="musicToggle">&#127925;</button>
+        <button class="btn-round" id="openSettingsBtn">&#9881;</button>
+    </div>
+
+    <div class="progress-pill">
+        <span>Materi: <strong id="homeMateriPoint">0</strong>/5</span>
+        <span>Kuis: <strong id="homeQuizPoint">0</strong>/100</span>
+    </div>
+
+    <div class="menu-container">
+        <button class="menu-item" onclick="window.location.href='tujuan.html'">
+            <div class="icon-box bg-tujuan">&#127919;</div>
+            <div class="menu-label">Tujuan</div>
+        </button>
+
+        <button class="menu-item" onclick="window.location.href='materi.html'">
+            <div class="icon-box bg-materi">&#128506;</div>
+            <div class="menu-label">Materi</div>
+        </button>
+
+        <button class="menu-item" onclick="window.location.href='topologi.html'">
+            <div class="icon-box bg-topologi">&#128225;</div>
+            <div class="menu-label">Topologi Jaringan</div>
+        </button>
+
+        <button class="menu-item" onclick="window.location.href='kuis.html'">
+            <div class="icon-box bg-kuis">&#129513;</div>
+            <div class="menu-label">Kuis Interaktif</div>
+        </button>
+
+        <button class="menu-item" onclick="window.location.href='profil.html'">
+            <div class="icon-box bg-profil">&#128100;</div>
+            <div class="menu-label">Profil</div>
+        </button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Randy Sharp - Gonna Be This Way.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeSettingsBtn">&#10005;</button>
+            <div class="modal-title">PENGATURAN</div>
+
+            <div class="tools-grid">
+                <div class="tool-box" id="modalMusicToggle">
+                    <div class="tool-icon bg-music" id="modalMusicIcon">&#127925;</div>
+                    <span>Musik Latar</span>
+                </div>
+                <div class="tool-box" onclick="alert('Efek suara aktif!')">
+                    <div class="tool-icon bg-suara">&#128276;</div>
+                    <span>Efek Suara</span>
+                </div>
+                <div class="tool-box" onclick="window.location.href='petunjuk.html'">
+                    <div class="tool-icon bg-petunjuk">&#10067;</div>
+                    <span>Petunjuk</span>
+                </div>
+                <div class="tool-box" onclick="window.location.href='tentang.html'">
+                    <div class="tool-icon bg-tentang">&#8505;</div>
+                    <span>Tentang Media</span>
+                </div>
+                <div class="tool-box" onclick="if(confirm('Reset progres kuis?')){alert('Progres kuis direset.')}">
+                    <div class="tool-icon bg-reset">&#128260;</div>
+                    <span>Reset Kuis</span>
+                </div>
+                <div class="tool-box" onclick="window.location.href='menu.html'">
+                    <div class="tool-icon bg-home">&#127968;</div>
+                    <span>Menu Utama</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

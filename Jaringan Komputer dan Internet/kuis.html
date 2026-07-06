@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Jaringan Komputer</title>
+    <link rel="stylesheet" href="belajar.css"> 
+    <style>
+        /* 1. PUSATKAN HALAMAN & BACKGROUND UTAMA */
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;      
+            justify-content: center;  
+            margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.73), rgba(255, 255, 255, 0.78)),
+                url('bg_netacademy.jpeg') center center / cover no-repeat fixed !important;
+        }
+
+        .page-shell {
+            width: min(1080px, 100%);
+            margin: 0 auto !important;
+            padding: 0;
+        }
+
+        /* 2. FIX JUDUL ATAS: Memaksa judul kuis presisi di tengah tanpa terdorong tombol back */
+        .app-header {
+            position: relative;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        
+        .back-btn {
+            position: absolute !important;
+            left: 0 !important;
+            margin: 0 !important;
+            z-index: 10;
+        }
+
+        .title-block {
+            text-align: center !important;
+            width: 100%;
+        }
+
+        /* 3. FIX KOTAK KUNING: Membuat teks soal benar-benar simetris di tengah */
+        .question-symbol {
+            display: flex !important;
+            justify-content: center !important; 
+            align-items: center !important;     
+            text-align: center !important;      
+            min-height: 160px;
+            font-size: 1.5rem; 
+            font-weight: bold;
+            color: #2e7d32;
+            padding: 24px;
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+
+        .question-symbol span {
+            text-align: center !important;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* 4. FIX TEKS PETUNJUK: Menengahkan teks di bawah kotak kuning */
+        .feedback {
+            text-align: center !important;
+            width: 100%;
+        }
+
+        .choice-btn {
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        
+        .choice-btn:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="app-header">
+            <a class="back-btn" href="index.html">&#8592; Menu Utama</a>
+            <div class="title-block">
+                <p class="eyebrow">Evaluasi Pembelajaran</p>
+                <h1>Kuis Jaringan</h1>
+                <p class="subtitle">Pilih jawaban yang paling tepat dan kumpulkan poinmu!</p>
+            </div>
+        </header>
+
+        <section class="panel quiz-card">
+            <div class="mode-tabs">
+                <button class="mode-btn active" data-mode="santai">Mode Santai</button>
+                <button class="mode-btn" data-mode="cepat">Tantangan Waktu</button>
+            </div>
+            
+            <div class="score-row">
+                <span id="progress">Soal 1/10</span>
+                <span id="score">Skor 0</span>
+            </div>
+            
+            <div class="question-symbol" id="questionSymbol">Memuat soal...</div>
+            
+            <p class="feedback" id="questionText">Pilih satu jawaban di bawah ini:</p>
+            
+            <div class="choices" id="choices"></div>
+            
+            <div class="badge-row">
+                <div class="badge"><strong id="bestScore">0</strong>Skor Tertinggi</div>
+                <div class="badge"><strong id="comboText">0</strong>Runtun Benar</div>
+                <div class="badge"><strong id="timerText">-</strong>Waktu</div>
+            </div>
+            
+            <div class="controls">
+                <button class="primary-btn" id="nextQuestion">Selanjutnya</button>
+                <button class="ghost-btn" id="restartQuiz">Ulangi Kuis</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- DATA BANK SOAL JARINGAN KOMPUTER ---
+        const bank = [
+            {
+                q: "Perangkat yang berfungsi menghubungkan dua jaringan yang berbeda subnet adalah...",
+                options: ["Switch", "Hub", "Router", "Repeater"],
+                answer: "Router"
+            },
+            {
+                q: "Topologi jaringan yang menggunakan satu kabel pusat sebagai media transmisi disebut topologi...",
+                options: ["Star", "Ring", "Bus", "Mesh"],
+                answer: "Bus"
+            },
+            {
+                q: "Protokol yang berfungsi memberikan alamat IP secara otomatis kepada client adalah...",
+                options: ["DNS", "DHCP", "FTP", "HTTP"],
+                answer: "DHCP"
+            },
+            {
+                q: "Kabel jaringan yang memiliki urutan warna Putih-Oranye, Oranye, Putih-Hijau, Biru... adalah jenis susunan?",
+                options: ["Straight-through", "Crossover", "Rollover", "Fiber Optic"],
+                answer: "Straight-through"
+            },
+            {
+                q: "Berapa panjang maksimal tarikan kabel UTP (Cat5e/Cat6) tanpa menggunakan repeater?",
+                options: ["50 Meter", "100 Meter", "200 Meter", "500 Meter"],
+                answer: "100 Meter"
+            }
+        ];
+
+        let current = 0;
+        let score = 0;
+        let best = Number(localStorage.getItem('skorJaringan') || 0);
+        let combo = 0;
+        let answered = false;
+        let mode = 'santai';
+        let timeLeft = 15;
+        let clock = null;
+
+        function startTimer() {
+            clearInterval(clock);
+            if (mode !== 'cepat') {
+                document.getElementById('timerText').textContent = '-';
+                return;
+            }
+            timeLeft = 15;
+            document.getElementById('timerText').textContent = timeLeft;
+            clock = setInterval(() => {
+                timeLeft -= 1;
+                document.getElementById('timerText').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(clock);
+                    answered = true;
+                    combo = 0;
+                    document.getElementById('questionText').textContent = 'Waktu habis! Silakan lanjut ke soal berikutnya.';
+                    document.getElementById('comboText').textContent = combo;
+                    
+                    const item = bank[current];
+                    document.querySelectorAll('.choice-btn').forEach(btn => {
+                        if (btn.dataset.answer === item.answer) {
+                            btn.classList.add('correct');
+                        } else {
+                            btn.classList.add('wrong');
+                        }
+                    });
+                }
+            }, 1000);
+        }
+
+        function render() {
+            const item = bank[current];
+            answered = false;
+            document.getElementById('progress').textContent = `Soal ${current + 1}/${bank.length}`;
+            document.getElementById('score').textContent = `Skor ${score}`;
+            document.getElementById('bestScore').textContent = best;
+            document.getElementById('comboText').textContent = combo;
+
+            document.getElementById('questionSymbol').innerHTML = `<span>${item.q}</span>`;
+            document.getElementById('questionText').textContent = mode === 'cepat' ? 'Jawab secepatnya!' : 'Pajib salah satu jawaban di bawah ini:';
+            
+            const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+            
+            document.getElementById('choices').innerHTML = shuffledOptions.map(option =>
+                `<button class="choice-btn" data-answer="${option}">${option}</button>`
+            ).join('');
+            
+            startTimer();
+        }
+
+        document.getElementById('choices').addEventListener('click', event => {
+            const button = event.target.closest('button');
+            if (!button || answered) return;
+            answered = true;
+            clearInterval(clock);
+            
+            const item = bank[current];
+            const correct = button.dataset.answer === item.answer;
+            
+            if (correct) {
+                combo += 1;
+                score += mode === 'cepat' ? 15 + timeLeft : 10 + combo;
+                button.classList.add('correct');
+                document.getElementById('questionText').textContent = 'Tepat Sekali! Jawabanmu benar.';
+            } else {
+                combo = 0;
+                button.classList.add('wrong');
+                document.getElementById('questionText').textContent = `Kurang tepat. Jawaban yang benar adalah: ${item.answer}`;
+                
+                document.querySelectorAll('.choice-btn').forEach(btn => {
+                    if (btn.dataset.answer === item.answer) btn.classList.add('correct');
+                });
+            }
+            
+            if (score > best) {
+                best = score;
+                localStorage.setItem('skorJaringan', best);
+            }
+            document.getElementById('score').textContent = `Skor ${score}`;
+            document.getElementById('bestScore').textContent = best;
+            document.getElementById('comboText').textContent = combo;
+        });
+
+        document.getElementById('nextQuestion').addEventListener('click', () => {
+            if (current === bank.length - 1) {
+                const predikat = score >= (bank.length * 10 * 0.8) ? 'Luar Biasa!' : 'Terus Belajar!';
+                document.getElementById('questionSymbol').innerHTML = `<span style="font-size:4rem;">&#127942;</span>`;
+                document.getElementById('questionText').textContent = `${predikat} Kuis selesai.`;
+                document.getElementById('choices').innerHTML = '';
+                document.getElementById('timerText').textContent = '-';
+                clearInterval(clock);
+                return;
+            }
+            current += 1;
+            render();
+        });
+
+        document.getElementById('restartQuiz').addEventListener('click', () => {
+            current = 0;
+            score = 0;
+            combo = 0;
+            bank.sort(() => Math.random() - 0.5);
+            render();
+        });
+
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(item => item.classList.remove('active'));
+                button.classList.add('active');
+                mode = button.dataset.mode;
+                
+                bank.sort(() => Math.random() - 0.5);
+                current = 0;
+                score = 0;
+                combo = 0;
+                render();
+            });
+        });
+
+        bank.sort(() => Math.random() - 0.5);
+        render();
+    </script>
+</body>
+</html>

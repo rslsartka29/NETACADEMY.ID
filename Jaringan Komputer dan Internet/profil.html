@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NETACADEMY - Profil Pengembang</title>
+    <link rel="stylesheet" href="belajar.css">
+    <style>
+        .profil-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        /* Desain Card Profil */
+        .profil-card {
+            background: #ffffff;
+            border: 3px solid #203124;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 4px 4px 0px #203124;
+            text-align: center;
+        }
+
+        /* BINGKAI AVATAR BULAT FOTO REAL */
+        .avatar-container {
+            width: 110px;
+            height: 110px;
+            background: #ffffff;
+            border: 3px solid #203124;
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 3px 3px 0px #203124;
+            overflow: hidden; /* Memotong gambar agar tetap bulat sempurna */
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Menjaga proporsi wajah agar tidak gepeng */
+            display: block;
+        }
+
+        /* Teks Identitas */
+        .nama-pengembang {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #203124;
+            margin-bottom: 5px;
+        }
+
+        .npm-pengembang {
+            font-size: 1rem;
+            color: #d32f2f;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: #ffebee;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid #d32f2f;
+        }
+
+        /* Tabel Biodata Rapi */
+        .bio-table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .bio-table td {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #424242;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .bio-table td:first-child {
+            font-weight: bold;
+            color: #2e7d32;
+            width: 35%;
+        }
+
+        /* Card Judul Skripsi */
+        .skripsi-card {
+            background: #f3e5f5;
+            border: 3px solid #4a148c;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 3px 3px 0px #4a148c;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .skripsi-title-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #7b1fa2;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .skripsi-title {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #203124;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="app-header">
+            <a class="back-btn" href="index.html">&#8592; Menu Utama</a>
+            <div class="title-block" style="text-align: right;">
+                <p class="eyebrow">Informasi Peneliti</p>
+                <h1 style="font-size: 1.5rem; font-weight: 900;">Profil</h1>
+            </div>
+        </header>
+
+        <div class="profil-container">
+            
+            <div class="profil-card">
+                <div class="avatar-container">
+                    <img src="foto caca.jpeg" alt="Foto Rahma Salsabilla Artika">
+                </div>
+                
+                <div class="nama-pengembang">Rahma Salsabilla Artika</div>
+                <div class="npm-pengembang">NPM: 2083207036</div>
+
+                <table class="bio-table">
+                    <tr>
+                        <td>Program Studi</td>
+                        <td>: Pendidikan Teknologi Informasi</td>
+                    </tr>
+                    <tr>
+                        <td>Fakultas</td>
+                        <td>: Fakultas Ilmu Pendidikan</td>
+                    </tr>
+                    <tr>
+                        <td>Universitas</td>
+                        <td>: Universitas Nurul Huda (UNUHA)</td>
+                    </tr>
+                    <tr>
+                        <td>Tahun</td>
+                        <td>: 2026</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="skripsi-card">
+                <div class="skripsi-title-label">Judul Penelitian Skripsi</div>
+                <div class="skripsi-title">
+                    "Pengembangan Media Pembelajaran Infografis Interaktif Sebagai Sumber Belajar Materi Jaringan Komputer dan Internet Bagi Siswa Kelas X SMA Negeri 1 Belitang"
+                </div>
+            </div>
+
+            <div class="profil-card" style="background: #fff9c4; border-color: #fbc02d; box-shadow: 4px 4px 0px #fbc02d; text-align: left; padding: 15px;">
+                <p style="font-weight: 900; color: #f57f17; font-size: 1rem; margin-bottom: 5px;">Tentang NETACADEMY.ID</p>
+                <p style="font-size: 0.88rem; color: #555; line-height: 1.5; text-align: justify;">
+                    Website ini dirancang menggunakan HTML, CSS, dan JavaScript murni sebagai purwarupa <i>(prototype)</i> media pembelajaran interaktif berbasis <i>smartphone dan pc</i>. Bertujuan untuk memudahkan siswa memahami arsitektur jaringan sesuai Kurikulum Merdeka Fase E.
+                </p>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>

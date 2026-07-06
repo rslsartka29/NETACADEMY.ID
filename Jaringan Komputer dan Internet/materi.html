@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NETACADEMY - Infografis Interaktif</title>
+    <link rel="stylesheet" href="belajar.css">
+    <style>
+        /* Desain Halaman Infografis Interaktif */
+        .infografis-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .materi-slide {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .materi-slide.active {
+            display: block;
+        }
+
+        /* Desain Card Infografis */
+        .info-card {
+            background: #ffffff;
+            border: 3px solid #203124;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 4px 4px 0px #203124;
+            transition: transform 0.2s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            border-bottom: 2px dashed #e0e0e0;
+            padding-bottom: 8px;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            background: #dff4ff;
+            padding: 8px;
+            border-radius: 12px;
+            border: 2px solid #203124;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #2e7d32;
+        }
+
+        .info-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333;
+            text-align: justify;
+        }
+
+        /* Desain Grid Tombol Interaktif */
+        .interactive-badge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .interactive-badge {
+            background: #f1f8e9;
+            border: 2px solid #2e7d32;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 2px 2px 0px #203124;
+        }
+
+        .interactive-badge:hover, .interactive-badge.active {
+            background: #2e7d32;
+            color: #fff;
+            transform: scale(1.02);
+        }
+
+        /* PANEL DETAIL MATERI (Dinamiis Muncul di Dalam Halaman) */
+        .component-detail-box {
+            background: #fffde7;
+            border: 2px solid #fbc02d;
+            border-radius: 16px;
+            padding: 15px;
+            margin-top: 15px;
+            box-shadow: 3px 3px 0px #203124;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .detail-title {
+            font-weight: 900;
+            color: #f57f17;
+            margin-bottom: 6px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Desain Daftar Referensi / Sitasi Akademis */
+        .reference-box {
+            background: #f9f9f9;
+            border-left: 4px solid #757575;
+            padding: 10px;
+            font-size: 0.78rem;
+            color: #555;
+            margin-top: 15px;
+            font-style: italic;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Bar Navigasi Bawah (Next, Back, Finish) */
+        .nav-bar-materi {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            text-align: center;
+            border-radius: 16px;
+            border: 3px solid #203124;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #203124;
+        }
+
+        .btn-back { background: #ffcdd2; }
+        .btn-next { background: #c8e6c9; }
+        .btn-finish { background: #fff9c4; }
+
+        .materi-progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            border: 2px solid #203124;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .materi-progress-fill {
+            height: 100%;
+            width: 20%;
+            background: #4caf50;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="app-header">
+            <a class="back-btn" href="index.html">&#8592; Menu Utama</a>
+            <div class="title-block" style="text-align: right;">
+                <p class="eyebrow">NETACADEMY Kelas X</p>
+                <h1 style="font-size: 1.5rem; font-weight: 900;">Infografis Interaktif</h1>
+            </div>
+        </header>
+
+        <div class="materi-progress-bar">
+            <div class="materi-progress-fill" id="progressFill"></div>
+        </div>
+        <p style="font-size: 0.85rem; font-weight: bold; text-align: center; margin-bottom: 15px;" id="pageIndicator">Materi 1 dari 5</p>
+
+        <div class="infografis-container">
+            
+            <div class="materi-slide active" id="slide1">
+                <div class="info-card" style="background: #e8f5e9;">
+                    <div class="card-header">
+                        <div class="card-icon">💻</div>
+                        <div class="card-title">1. Pengertian Jaringan Komputer</div>
+                    </div>
+                    <p class="info-text">
+                        <b>Jaringan komputer</b> adalah sebuah sistem yang terdiri atas dua atau lebih perangkat komputer serta komponen pendukung lainnya yang saling terhubung menggunakan media transmisi (kabel atau nirkabel) dan aturan komunikasi (protokol) terstandarisasi. Hubungan ini memungkinkan seluruh perangkat untuk saling berkomunikasi, bertukar data, serta berbagi sumber daya fisik maupun layanan internet.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <p class="card-title" style="font-size: 1rem;">🔍 Komponen Utama Komunikasi Data:</p>
+                    <p class="info-text" style="font-size: 0.9rem; margin-top: 5px; color: #d32f2f; font-weight: bold;">💡 Petunjuk: Klik salah satu komponen di bawah untuk membuka detail materi!</p>
+                    
+                    <div class="interactive-badge-grid">
+                        <div class="interactive-badge" id="badge-pengirim" onclick="tampilDetailKomponen('pengirim')">1. Pengirim</div>
+                        <div class="interactive-badge" id="badge-penerima" onclick="tampilDetailKomponen('penerima')">2. Penerima</div>
+                        <div class="interactive-badge" id="badge-media" onclick="tampilDetailKomponen('media')">3. Media Rambat</div>
+                        <div class="interactive-badge" id="badge-protokol" onclick="tampilDetailKomponen('protokol')">4. Protokol</div>
+                    </div>
+
+                    <div class="component-detail-box" id="detailBox">
+                        <div class="detail-title" id="detailTitle">📌 Pilih Komponen</div>
+                        <p class="info-text" id="detailContent" style="font-size: 0.9rem;">Silakan klik salah satu dari 4 tombol komponen di atas untuk mempelajari materi secara mendalam.</p>
+                    </div>
+                </div>
+
+                <div class="reference-box">
+                    <b>Sumber Ilmiah Berbobot:</b><br>
+                    • Wahyono, & Saputra, B. (2021). Buku Siswa Informatika untuk SMA Kelas X. Kemendikbudristek RI (Hal. 91-92).<br>
+                    • Tanenbaum, A. S., & Wetherall, D. J. (2011). Computer Networks (5th Edition). Prentice Hall.
+                </div>
+            </div>
+
+            <div class="materi-slide" id="slide2">
+                <div class="info-card" style="background: #fff3e0;">
+                    <div class="card-header">
+                        <div class="card-icon">🌍</div>
+                        <div class="card-title">2. Jenis Jaringan Komputer</div>
+                    </div>
+                    <p class="info-text">
+                        Jaringan komputer diklasifikasikan berdasarkan batasan wilayah geografis operasionalnya serta media transmisi fisik yang digunakan untuk merambatkan data.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <p class="card-title" style="font-size: 1rem;">📌 Berdasarkan Cakupan Geografis:</p>
+                    <p class="info-text" style="font-size: 0.9rem;">
+                        • <b>LAN (Local Area Network):</b> Jaringan privat skala kecil (ruangan, rumah, laboratorium sekolah).<br>
+                        • <b>MAN (Metropolitan Area Network):</b> Menghubungkan area kota/kabupaten (antar-kampus atau kantor pemda).<br>
+                        • <b>WAN (Wide Area Network):</b> Cakupan geografis super luas (antar-provinsi, negara, hingga benua).
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <p class="card-title" style="font-size: 1rem;">📡 Berdasarkan Media Transmisi:</p>
+                    <p class="info-text" style="font-size: 0.9rem;">
+                        • <b>Konektivitas Berkabel (Wired):</b> Memanfaatkan media fisik terpandu seperti kabel tembaga UTP (maksimal 100 meter) atau kabel serat optik (Fiber Optic) berkecepatan cahaya.<br>
+                        • <b>Konektivitas Nirkabel (Wireless):</b> Transmisi data tanpa kabel menggunakan gelombang elektromagnetik seperti Wi-Fi (jarak dekat) atau jaringan seluler operator.
+                    </p>
+                </div>
+
+                <div class="reference-box">
+                    <b>Sumber/Referensi Jelas:</b><br>
+                    • Stallings, W. (2016). Data and Computer Communications (10th Edition). Pearson.<br>
+                    • Modul Ajar Informatika Kelas X Fase E: Jaringan Komputer dan Internet. Kemendikbudristek.
+                </div>
+            </div>
+
+            <div class="materi-slide" id="slide3">
+                <div class="info-card" style="background: #e1f5fe;">
+                    <div class="card-header">
+                        <div class="card-icon">🛠️</div>
+                        <div class="card-title">3. Perangkat Keras Jaringan</div>
+                    </div>
+                    <p class="info-text">
+                        Komputer memerlukan perangkat keras interkoneksi eksternal dan internal khusus agar sinyal data digital dapat dialirkan, diarahkan, dan diterima dengan tepat tanpa kerusakan lalu lintas data.
+                    </p>
+                </div>
+
+                <div class="infografis-container" style="gap: 10px;">
+                    <div class="info-card" style="margin-bottom: 0px; padding: 12px; border-color: #0288d1;">
+                        <b>1. NIC (Network Interface Card):</b> Kartu antar muka jaringan fisik pada motherboard komputer sebagai gerbang komunikasi utama.
+                    </div>
+                    <div class="info-card" style="margin-bottom: 0px; padding: 12px; border-color: #0288d1;">
+                        <b>2. Switch:</b> Konsentrator cerdas penampung kabel LAN yang mendistribusikan paket data langsung ke MAC Address komputer tujuan.
+                    </div>
+                    <div class="info-card" style="margin-bottom: 0px; padding: 12px; border-color: #0288d1;">
+                        <b>3. Router:</b> Perangkat cerdas untuk menjembatani dan merutekan jalur data antar segmen jaringan/IP subnet yang berbeda.
+                    </div>
+                    <div class="info-card" style="margin-bottom: 0px; padding: 12px; border-color: #0288d1;">
+                        <b>4. Modem:</b> Mengubah sinyal digital komputer ke sinyal analog media transmisi telepon/serat optik, dan sebaliknya.
+                    </div>
+                </div>
+
+                <div class="reference-box">
+                    <b>Sumber/Referensi Jelas:</b><br>
+                    • Chandra, P., & Kosdiana, N. (2018). Pengantar Jaringan Komputer Berbasis Komputasi Awan. Jurnal Teknologi Informasi, 12(2).<br>
+                    • Kurose, J. F., & Ross, K. W. (2017). Computer Networking: A Top-Down Approach (7th Edition). Pearson.
+                </div>
+            </div>
+
+            <div class="materi-slide" id="slide4">
+                <div class="info-card" style="background: #f3e5f5;">
+                    <div class="card-header">
+                        <div class="card-icon">📐</div>
+                        <div class="card-title">4. Topologi Jaringan Komputer</div>
+                    </div>
+                    <p class="info-text">
+                        <b>Topologi jaringan</b> adalah peta, arsitektur, atau struktur susunan fisik maupun logis bagaimana perangkat-perangkat komputer dikoneksikan satu sama lain membentuk sebuah sistem integrasi.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <p class="card-title" style="font-size: 1rem; margin-bottom: 10px;">Karakteristik Arsitektur Topologi Populer:</p>
+                    <p class="info-text" style="font-size: 0.9rem; line-height: 1.5;">
+                        • <b>Topologi Bus:</b> Menggunakan satu kabel tunggal pusat (backbone). Sangat hemat kabel, namun jika kabel utama rusak/putus, maka seluruh jaringan akan lumpuh total.<br><br>
+                        • <b>Topologi Star (Bintang):</b> Setiap komputer terhubung langsung ke Switch pusat. Ini adalah topologi paling populer di laboratorium sekolah karena sangat andal; jika salah satu komputer rusak, komputer lainnya tidak akan terganggu sama sekali.
+                    </p>
+                </div>
+
+                <div class="reference-box">
+                    <b>Sumber/Referensi Jelas:</b><br>
+                    • Kurose, J. F., & Ross, K. W. (2017). Computer Networking: A Top-Down Approach (7th Edition). Pearson.
+                </div>
+            </div>
+
+            <div class="materi-slide" id="slide5">
+                <div class="info-card" style="background: #e0f7fa;">
+                    <div class="card-header">
+                        <div class="card-icon">🌐</div>
+                        <div class="card-title">5. Internet & Komunikasi Data Seluler</div>
+                    </div>
+                    <p class="info-text">
+                        <b>Internet</b> (*Interconnection-Networking*) menghubungkan jutaan LAN global melalui protokol baku **TCP/IP**. Saat smartphone mengirim data, terjadi proses komunikasi digital yang canggih.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <p class="card-title" style="font-size: 1rem;">🔄 Alur Mekanisme Kerja Paket Data:</p>
+                    <p class="info-text" style="font-size: 0.88rem; line-height: 1.5;">
+                        1. <b>Packet Switching:</b> File dipecah menjadi ribuan <i>paket data</i> kecil berlabel alamat IP pengirim dan tujuan.<br>
+                        2. <b>BTS Transmisi:</b> Paket dipancarkan via gelombang radio nirkabel HP menuju menara <b>BTS</b> terdekat.<br>
+                        3. <b>Routing Global:</b> Data dialirkan lewat kabel bawah tanah ISP dan diarahkan oleh router dunia menuju server tujuan.<br>
+                        4. <b>Proteksi Enkripsi (HTTPS):</b> Data diamankan menggunakan sistem pengodean acak (Enkripsi) melalui sertifikat <b>SSL/TLS</b> bertanda gembok terkunci pada web browser.
+                    </p>
+                </div>
+
+                <div class="reference-box">
+                    <b>Sumber/Referensi Jelas:</b><br>
+                    • Wahyono, & Saputra, B. (2021). Buku Siswa Informatika Kelas X. Kemendikbudristek (Hal. 101-102).<br>
+                    • Forouzan, B. A. (2015). Cryptography and Network Security. McGraw-Hill Education.
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="nav-bar-materi">
+            <button class="btn-nav btn-back" id="btnBack" disabled>Kembali</button>
+            <button class="btn-nav btn-next" id="btnNext">Lanjut</button>
+            <button class="btn-nav btn-finish" id="btnFinish" style="display: none;">Selesai Belajar</button>
+        </footer>
+    </main>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 5;
+
+        const btnBack = document.getElementById('btnBack');
+        const btnNext = document.getElementById('btnNext');
+        const btnFinish = document.getElementById('btnFinish');
+        const progressFill = document.getElementById('progressFill');
+        const pageIndicator = document.getElementById('pageIndicator');
+
+        // FUNGSI DINAMIS UNTUK MEMUNCUKKAN MATERI KOMPONEN JARINGAN (MATERI 1)
+        function tampilDetailKomponen(komponen) {
+            const detailBox = document.getElementById('detailBox');
+            const detailTitle = document.getElementById('detailTitle');
+            const detailContent = document.getElementById('detailContent');
+            
+            // Hapus kelas active dari semua badge terlebih dahulu
+            document.querySelectorAll('.interactive-badge').forEach(badge => {
+                badge.classList.remove('active');
+            });
+
+            // Tambahkan kelas active ke badge yang sedang diklik dan ubah teks kontennya
+            if (komponen === 'pengirim') {
+                document.getElementById('badge-pengirim').classList.add('active');
+                detailTitle.innerHTML = "📡 1. Perangkat Pengirim (Sender)";
+                detailContent.innerHTML = "<b>Pengirim</b> adalah piranti atau komputer asal yang bertugas menginisiasi dan memproses data mentah menjadi sinyal digital/analog untuk ditransmisikan. Contohnya komputer server, laptop, atau smartphone kamu. Perangkat ini wajib memiliki <i>Network Interface Card (NIC)</i> untuk menyuntikkan data ke media rambat.";
+            } else if (komponen === 'penerima') {
+                document.getElementById('badge-penerima').classList.add('active');
+                detailTitle.innerHTML = "📥 2. Perangkat Penerima (Receiver)";
+                detailContent.innerHTML = "<b>Penerima</b> adalah perangkat target/sasaran khusus yang dituju oleh pengirim. Tugas utamanya adalah menangkap sinyal transmisi dari media rambat, lalu menerjemahkannya kembali (dekode) menjadi data utuh yang dapat dimengerti dan dibaca oleh pengguna akhir.";
+            } else if (komponen === 'media') {
+                document.getElementById('badge-media').classList.add('active');
+                detailTitle.innerHTML = "🔌 3. Media Transmisi (Media Rambat)";
+                detailContent.innerHTML = "<b>Media Transmisi</b> adalah jalur atau perantara fisik maupun non-fisik tempat bit-bit data mengalir dari pengirim ke penerima. Dibagi menjadi dua jenis: <i>Guided Media</i> menggunakan bentuk fisik seperti kabel serat optik (Fiber Optic) atau kabel tembaga (UTP), serta <i>Unguided Media</i> menggunakan gelombang radio nirkabel seperti Wi-Fi atau gelombang seluler.";
+            } else if (komponen === 'protokol') {
+                document.getElementById('badge-protokol').classList.add('active');
+                detailTitle.innerHTML = "📜 4. Aturan Komunikasi (Protokol)";
+                detailContent.innerHTML = "<b>Protokol</b> adalah sekumpulan aturan standar, format, serta kesepakatan logis yang mengatur jalannya komunikasi data antar perangkat komputer yang berbeda merek atau sistem operasi. Tanpa protokol (seperti standarisasi <i>TCP/IP</i>), dua buah komputer yang terhubung secara fisik tidak akan bisa saling bertukar informasi karena perbedaan 'bahasa' digital.";
+            }
+        }
+
+        // FUNGSI NAVIGASI MATERI SLIDE
+        function updateNavigation() {
+            for (let i = 1; i <= totalSlides; i++) {
+                document.getElementById(`slide${i}`).classList.remove('active');
+            }
+            document.getElementById(`slide${currentSlide}`).classList.add('active');
+
+            const progressPercentage = (currentSlide / totalSlides) * 100;
+            progressFill.style.width = `${progressPercentage}%`;
+            pageIndicator.textContent = `Materi ${currentSlide} dari ${totalSlides}`;
+
+            if (currentSlide === 1) {
+                btnBack.disabled = true;
+                btnBack.style.opacity = 0.5;
+            } else {
+                btnBack.disabled = false;
+                btnBack.style.opacity = 1;
+            }
+
+            if (currentSlide === totalSlides) {
+                btnNext.style.display = 'none';
+                btnFinish.style.display = 'block';
+            } else {
+                btnNext.style.display = 'block';
+                btnFinish.style.display = 'none';
+            }
+        }
+
+        btnNext.addEventListener('click', () => {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateNavigation();
+            }
+        });
+
+        btnBack.addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateNavigation();
+            }
+        });
+
+        btnFinish.addEventListener('click', () => {
+            // Sinkronisasi data progres belajar agar menu utama ter-update menjadi 5/5
+            localStorage.setItem('homeMateriPoint', '5');
+            alert('Selamat! Kamu telah menyelesaikan seluruh rangkaian materi interaktif NETACADEMY.');
+            window.location.href = 'index.html';
+        });
+
+        // Jalankan fungsi navigasi awal
+        updateNavigation();
+    </script>
+</body>
+</html>

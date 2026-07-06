@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NETACADEMY - Tentang Media</title>
+    <link rel="stylesheet" href="belajar.css">
+    <style>
+        .tentang-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .tentang-card {
+            background: #ffffff;
+            border: 3px solid #203124;
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 4px 4px 0px #203124;
+        }
+
+        .tentang-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #2e7d32;
+            margin-bottom: 8px;
+            border-bottom: 2px dashed #e0e0e0;
+            padding-bottom: 6px;
+        }
+
+        .tentang-text {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #333;
+            text-align: justify;
+        }
+
+        /* Tabel Spesifikasi */
+        .spec-table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+
+        .spec-table td {
+            padding: 8px;
+            font-size: 0.88rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .spec-table td:first-child {
+            font-weight: bold;
+            color: #203124;
+            width: 40%;
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="app-header">
+            <a class="back-btn" href="index.html">&#8592; Menu Utama</a>
+            <div class="title-block" style="text-align: right;">
+                <p class="eyebrow">Spesifikasi Sistem</p>
+                <h1 style="font-size: 1.4rem; font-weight: 900;">Tentang Media</h1>
+            </div>
+        </header>
+
+        <div class="tentang-container">
+            <div class="tentang-card">
+                <div class="tentang-title">💻 Latar Belakang Aplikasi</div>
+                <p class="tentang-text">
+                    <b>NETACADEMY</b> merupakan media pembelajaran berbasis web responsive yang dikembangkan sebagai sumber belajar mandiri pada materi Jaringan Komputer dan Internet. Media ini menerapkan prinsip <i>Infografis Interaktif</i> untuk mempermudah visualisasi konsep abstrak jaringan agar lebih konkret dan menarik bagi siswa Kelas X.
+                </p>
+            </div>
+
+            <div class="tentang-card">
+                <div class="tentang-title">🛠️ Spesifikasi Teknis</div>
+                <table class="spec-table">
+                    <tr>
+                        <td>Metode Validasi</td>
+                        <td>Ahli Media & Ahli Materi</td>
+                    </tr>
+                    <tr>
+                        <td>Teknologi Utama</td>
+                        <td>HTML5, CSS3, JavaScript (ES6)</td>
+                    </tr>
+                    <tr>
+                        <td>Desain Arsitektur</td>
+                        <td>Cisco Packet Tracer Mobile</td>
+                    </tr>
+                    <tr>
+                        <td>Sifat Aplikasi</td>
+                        <td>Offline Client-Side (Ringan & Cepat)</td>
+                    </tr>
+                    <tr>
+                        <td>Target Pengguna</td>
+                        <td>Siswa Kelas X SMAN 1 Belitang</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="tentang-card" style="background: #fff9c4; border-color: #fbc02d; text-align: center; padding: 12px;">
+                <p style="font-size: 0.82rem; font-weight: bold; color: #f57f17; margin: 0;">
+                    © 2026 NETACADEMY — Hubungan Penelitian Skripsi Pendidikan Teknologi Informasi (UNUHA).
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
